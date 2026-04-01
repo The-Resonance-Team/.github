@@ -1,8 +1,6 @@
 name: Incident
 description: Record a production or operational incident.
 title: "[Incident]: "
-labels:
-  - type: incident
 body:
   - type: input
     id: started

@@ -1,8 +1,6 @@
 name: Bug report
 description: Report a defect or behavioral regression.
 title: "[Bug]: "
-labels:
-  - type: bug
 body:
   - type: textarea
     id: summary

@@ -1,8 +1,6 @@
 name: Feature request
 description: Propose a product or platform enhancement.
 title: "[Feature]: "
-labels:
-  - type: feature
 body:
   - type: textarea
     id: problem

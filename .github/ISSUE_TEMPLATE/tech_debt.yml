@@ -1,8 +1,6 @@
 name: Tech debt
 description: Track cleanup, refactor, or engineering quality work.
 title: "[Tech Debt]: "
-labels:
-  - type: tech-debt
 body:
   - type: textarea
     id: issue
