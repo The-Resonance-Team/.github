@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a product or platform enhancement.
+title: "[Feature]: "
+labels:
+  - type: feature
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or opportunity
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and constraints
+  - type: textarea
+    id: success
+    attributes:
+      label: Success criteria

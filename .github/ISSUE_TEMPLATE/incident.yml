@@ -1,0 +1,35 @@
+name: Incident
+description: Record a production or operational incident.
+title: "[Incident]: "
+labels:
+  - type: incident
+body:
+  - type: input
+    id: started
+    attributes:
+      label: Incident start time
+      placeholder: YYYY-MM-DD HH:MM TZ
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Incident summary
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Customer or system impact
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Mitigation and current status
+    validations:
+      required: true
+  - type: textarea
+    id: followup
+    attributes:
+      label: Follow-up actions
