@@ -1,7 +1,8 @@
 # The Resonance Team
 
-> **[PLACEHOLDER]** ✏️ _One-line mission. Replace with the team's actual tagline._
-> _"Building AI applications for web, mobile, and Zalo."_
+The Resonance Team is a product engineering organization focused on shipping
+reliable web, API, and mobile experiences with a strong emphasis on developer
+experience, review discipline, and operational clarity.
 
 We build AI-powered products that ship across surfaces — web, native mobile
 (iOS + Android), and Zalo Mini App. Based in Vietnam, serving users wherever
