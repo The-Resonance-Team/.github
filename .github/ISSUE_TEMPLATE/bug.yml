@@ -1,0 +1,35 @@
+name: Bug Report
+description: File a bug report
+title: "[bug]: "
+labels: ["triage/needs-investigation"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened? What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Ordered steps to reproduce the bug
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, app version, device
+      placeholder: "Chrome 130, macOS 15, v1.2.0, iPhone 16"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or screenshots
+      description: Paste logs, error messages, or screenshots
+      render: shell

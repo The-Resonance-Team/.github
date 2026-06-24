@@ -1,0 +1,81 @@
+# CI Template — reusable workflow for product repos
+# Call from a product repo:
+#   jobs:
+#     ci:
+#       uses: The-Resonance-Team/.github/.github/workflows/ci-template.yml@main
+#       secrets: inherit
+
+name: CI Template
+
+on:
+  workflow_call:
+
+jobs:
+  lint-ts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+
+  lint-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: cd services/ai && uv sync && uv run ruff check .
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+
+  test-ts:
+    needs: [lint-ts]
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test -- --filter="./apps/*"
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/test
+
+  test-python:
+    needs: [lint-python]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: cd services/ai && uv sync && uv run pytest
+
+  test-e2e:
+    needs: [test-ts]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps
+      - run: pnpm exec playwright test

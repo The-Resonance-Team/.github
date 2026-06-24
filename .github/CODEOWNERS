@@ -1,0 +1,8 @@
+# All files — core team
+* @The-Resonance-Team/core
+
+# Architecture decisions require core team review
+/docs/adr/ @The-Resonance-Team/core
+
+# CI/CD workflows require core team review
+/.github/workflows/ @The-Resonance-Team/core

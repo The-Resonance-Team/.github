@@ -1,0 +1,29 @@
+name: Feature Request
+description: Propose a new feature or enhancement
+title: "[feat]: "
+labels: ["triage/needs-investigation"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem does this feature solve? Who benefits?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the feature. How should it work?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you consider? Why reject them?
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Which surfaces does this affect? (web / mobile / zalo / api / ai)

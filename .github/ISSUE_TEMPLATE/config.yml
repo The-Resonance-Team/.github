@@ -1,0 +1,45 @@
+name: Config / Convention Change
+description: Propose a change to a team standard, stack default, or workflow rule
+title: "[config]: "
+labels: ["triage/needs-investigation"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Tech stack default
+        - Workflow / branching
+        - CI/CD
+        - Security policy
+        - Testing standard
+        - Infrastructure
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Proposed change
+      description: What standard should change? What's the new default?
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Why change it? What problem does the current standard cause?
+    validations:
+      required: true
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration impact
+      description: Which existing products are affected? How do we migrate them?
+  - type: checkboxes
+    id: adr
+    attributes:
+      label: ADR
+      options:
+        - label: I understand this change requires an ADR (or superseding an existing one)
+          required: true
