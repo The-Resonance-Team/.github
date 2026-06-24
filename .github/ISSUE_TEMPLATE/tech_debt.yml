@@ -1,0 +1,24 @@
+name: Tech debt
+description: Track cleanup, refactor, or engineering quality work.
+title: "[Tech Debt]: "
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: Current issue
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk of leaving it unresolved
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed remediation
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
