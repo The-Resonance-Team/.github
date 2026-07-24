@@ -2,6 +2,10 @@
 
 Engineering workflow conventions for Resonance Team projects.
 
+The complete inspect → change → prove → handoff loop is defined in
+[`developer-loop.md`](developer-loop.md). This document keeps the GitHub Flow,
+commit, review, and release conventions.
+
 ## Branching — GitHub Flow
 
 ```
@@ -88,11 +92,9 @@ Issue templates in `.github/ISSUE_TEMPLATE/`:
 
 ### Triage labels
 
-Reuse the shared triage label vocabulary from the dotfiles:
-`~/workspace/dotfiles/docs/agents/triage-labels.md`.
-
-Five labels: `triage/needs-investigation`, `triage/accepted`,
-`triage/blocked`, `triage/duplicate`, `triage/wont-fix`.
+Use the organization issue-template vocabulary:
+`triage/needs-investigation`, `triage/accepted`, `triage/blocked`,
+`triage/duplicate`, and `triage/wont-fix`.
 
 ## Definition of done
 
@@ -125,12 +127,9 @@ tag (`v1.2.0`).
 | Pre-commit | husky + lint-staged (TS); pre-commit (Python) |
 | Commit lint | commitlint (enforces Conventional Commits) |
 
-## Reusing agent workflow docs
+## Developer loop
 
-The agent workflow layer (issue tracker conventions, triage labels, domain
-documents) is defined in `~/workspace/dotfiles/docs/agents/`. This playbook
-**links** those; it does not redefine them.
-
-- [Issue tracker conventions](https://github.com/xirothedev/dotfiles/blob/main/docs/agents/issue-tracker.md)
-- [Triage labels](https://github.com/xirothedev/dotfiles/blob/main/docs/agents/triage-labels.md)
-- [Domain documentation](https://github.com/xirothedev/dotfiles/blob/main/docs/agents/domain.md)
+Use the organization-wide [Developer Loop](developer-loop.md) for anchoring
+repository scope, selecting proof, classifying failures, delegating work, and
+writing handoffs. Project-specific code and domain facts remain in the project
+repository.

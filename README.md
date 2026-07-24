@@ -27,6 +27,12 @@ application starts from the same baseline — no reinventing.
 - [Architecture](docs/architecture.md) — system shape and data flow
 - [New app checklist](docs/new-app-checklist.md) — step-by-step bootstrap recipe
 - [Workflow](docs/workflow.md) — branch, commit, review, issue conventions
+- [Developer loop](docs/developer-loop.md) — anchor, proof, failure, delegation,
+  and handoff standard
+- [Project loop template](docs/templates/project-developer-loop.md) — shared
+  per-project overlay
+- [Developer handoff template](docs/templates/developer-handoff.md) —
+  continuation contract
 - [Infrastructure](docs/infrastructure.md) — VPS, Compose, TLS, deploy
 - [ADR log](docs/adr/) — why we chose what we chose
 

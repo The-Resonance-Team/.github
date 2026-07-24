@@ -173,7 +173,7 @@ Full details: [repositories.md](repositories.md).
 | Branching | GitHub Flow (short-lived feature branches off `main`) |
 | Commits | Conventional Commits (`feat:`, `fix:`, `chore:`, etc.) |
 | PR merge | Squash-merge, one review required |
-| Issues | Issue templates (bug, feature, config), triage labels from dotfiles |
+| Issues | Organization issue templates (bug, feature, config) and triage labels |
 | Docs | ADRs for all architectural decisions |
 
 Full details: [workflow.md](workflow.md).

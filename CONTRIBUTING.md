@@ -10,6 +10,8 @@ workflow start here.
    constraints.
 3. Check [docs/adr/](docs/adr/) — was this already decided? What was the
    reasoning?
+4. Read [docs/developer-loop.md](docs/developer-loop.md) and the project
+   overlay template before changing workflow or project structure.
 
 ## Proposal process
 
@@ -21,8 +23,13 @@ workflow start here.
 4. At least one review from a core team member required.
 5. Merge; the ADR is now the source of truth.
 
-## Reuse
+## Canonical developer loop
 
-The agent workflow layer (triage labels, issue tracker conventions, domain
-documents) lives in the dotfiles repo — see `~/workspace/dotfiles/docs/agents/`.
-This playbook links those, it doesn't duplicate them.
+The organization-wide engineering loop lives in
+[docs/developer-loop.md](docs/developer-loop.md). Projects adopt it with
+[the project overlay template](docs/templates/project-developer-loop.md) and
+record continuation state with [the handoff template](docs/templates/developer-handoff.md).
+
+The current user request, safety constraints, live repository, and active
+handoff are the authority order. Session transcripts and external global files
+are historical evidence only.
