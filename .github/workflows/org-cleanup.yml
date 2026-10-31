@@ -1,0 +1,90 @@
+name: Org Cleanup (Weekly)
+
+on:
+  schedule:
+    - cron: "0 2 * * 0"  # every Sunday 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gh
+      - name: Authenticate
+        env:
+          GH_TOKEN: ${{ secrets.ORG_CLEANUP_TOKEN }}
+        run: gh auth status
+      - name: Cleanup all org repos
+        env:
+          GH_TOKEN: ${{ secrets.ORG_CLEANUP_TOKEN }}
+          ORG: The-Resonance-Team
+        run: |
+          set -u
+          echo "=== Org cleanup started: $(date) ==="
+
+          # List all repos in org
+          repos=$(gh repo list "$ORG" --limit 1000 --json name --jq '.[].name')
+          echo "Repos found: $(echo "$repos" | wc -l)"
+
+          for repo in $repos; do
+            echo ""
+            echo "===== $repo ====="
+
+            # 1. Delete all artifacts
+            ids=$(gh api "repos/$ORG/$repo/actions/artifacts?per_page=100" --jq '.artifacts[].id' 2>/dev/null)
+            if [ -n "$ids" ]; then
+              echo "$ids" | xargs -P 8 -I{} gh api -X DELETE "repos/$ORG/$repo/actions/artifacts/{}" >/dev/null 2>&1
+              echo "  artifacts deleted"
+            fi
+
+            # 2. Delete all caches
+            cids=$(gh api "repos/$ORG/$repo/actions/caches?per_page=100" --jq '.actions_caches[].id' 2>/dev/null)
+            if [ -n "$cids" ]; then
+              echo "$cids" | xargs -P 8 -I{} gh api -X DELETE "repos/$ORG/$repo/actions/caches/{}" >/dev/null 2>&1
+              echo "  caches deleted"
+            fi
+
+            # 3. Delete workflow runs older than 7 days (keep recent)
+            cutoff=$(date -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -v-7d +%Y-%m-%dT%H:%M:%SZ)
+            page=1
+            while true; do
+              runs=$(gh api "repos/$ORG/$repo/actions/runs?per_page=100&page=$page" --jq ".workflow_runs[] | select(.created_at < \"$cutoff\") | .id" 2>/dev/null)
+              if [ -z "$runs" ]; then break; fi
+              echo "$runs" | xargs -P 8 -I{} gh api -X DELETE "repos/$ORG/$repo/actions/runs/{}" >/dev/null 2>&1
+              page=$((page+1))
+              if [ $page -gt 50 ]; then break; fi
+            done
+            echo "  old runs (>7d) deleted"
+          done
+
+          # 4. Cleanup package versions: keep latest 5 per package
+          echo ""
+          echo "=== Package cleanup ==="
+          pkgs=$(gh api "orgs/$ORG/packages?package_type=container&per_page=100" --jq '.[].name' 2>/dev/null)
+          for pkg in $pkgs; do
+            enc=$(python3 -c "import urllib.parse,sys; print(urllib.parse.quote('$pkg', safe=''))")
+            versions=$(gh api --paginate "orgs/$ORG/packages/container/$enc/versions?per_page=100" --jq '.[] | "\(.created_at) \(.id)"' 2>/dev/null | sort -r)
+            total=$(echo "$versions" | grep -c .)
+            if [ "$total" -le 5 ]; then
+              echo "  $pkg: $total versions (skip)"
+              continue
+            fi
+            to_delete=$(echo "$versions" | tail -n +6 | awk '{print $2}')
+            cnt=0
+            for vid in $to_delete; do
+              gh api -X DELETE "orgs/$ORG/packages/container/$enc/versions/$vid" >/dev/null 2>&1 && cnt=$((cnt+1))
+            done
+            echo "  $pkg: deleted $cnt (kept 5)"
+          done
+
+          echo ""
+          echo "=== Org cleanup finished: $(date) ==="
+EOF
+echo "script written"
