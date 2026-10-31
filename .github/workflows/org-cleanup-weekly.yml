@@ -81,5 +81,3 @@ jobs:
 
           echo ""
           echo "=== Org cleanup finished: $(date) ==="
-EOF
-echo "written"
